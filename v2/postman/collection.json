@@ -1,135 +1,15 @@
 {
 	"info": {
-		"_postman_id": "dd403a17-fd76-46c7-b079-57fecf00cc0d",
-		"name": "[rsoi][lab5] Hotels Booking System",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "976707"
+		"_postman_id": "8a9acd76-c928-407b-92fd-318781409305",
+		"name": "[rsoi][lab4] Hotels Booking System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Gateway API",
 			"item": [
 				{
-					"name": "[auth] Get Token",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Получить токен\", () => {",
-									"    pm.response.to.have.status(200)",
-									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.contains(\"application/json\");",
-									"",
-									"    const response = pm.response.json();",
-									"    pm.expect(response.access_token).not.be.empty",
-									"    pm.collectionVariables.set(\"authorizationToken\", response.access_token)",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "scope",
-									"value": "openid",
-									"type": "text"
-								},
-								{
-									"key": "grant_type",
-									"value": "password",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "{{username}}",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "{{password}}",
-									"type": "text"
-								},
-								{
-									"key": "clientId",
-									"value": "{{clientId}}",
-									"type": "text"
-								},
-								{
-									"key": "clientSecret",
-									"value": "{{clientSecret}}",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{identityProviderUrl}}/oauth/token",
-							"host": [
-								"{{identityProviderUrl}}"
-							],
-							"path": [
-								"oauth",
-								"token"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "[unauthorize] Получить список отелей",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Получение списка отелей\", () => {",
-									"    pm.response.to.have.status(401)",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{serviceUrl}}/api/v1/hotels?page=1&size=10",
-							"host": [
-								"{{serviceUrl}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"hotels"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "size",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "[success] Получить список отелей",
+					"name": "Получить список отелей",
 					"event": [
 						{
 							"listen": "test",
@@ -165,22 +45,12 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{authorizationToken}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{serviceUrl}}/api/v1/hotels?page=1&size=10",
+							"raw": "{{baseUrl}}/api/v1/hotels?page=1&size=10",
 							"host": [
-								"{{serviceUrl}}"
+								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
@@ -199,45 +69,50 @@
 							]
 						}
 					},
-					"response": []
-				},
-				{
-					"name": "[unauthorize] Получить информацию о статусе в программе лояльности",
-					"event": [
+					"response": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Получение информации о статусе в программе лояльности\", () => {",
-									"    pm.response.to.have.status(401)",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{serviceUrl}}/api/v1/loyalty",
-							"host": [
-								"{{serviceUrl}}"
+							"name": "Список отелей",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/hotels?page=1&size=10",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"hotels"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
 							],
-							"path": [
-								"api",
-								"v1",
-								"loyalty"
-							]
+							"cookie": [],
+							"body": "{\n    \"page\": 1,\n    \"pageSize\": 1,\n    \"totalElements\": 1,\n    \"items\": [\n        {\n            \"hotelUid\": \"049161bb-badd-4fa8-9d90-87c9a82b0668\",\n            \"name\": \"Ararat Park Hyatt Moscow\",\n            \"country\": \"Россия\",\n            \"city\": \"Москва\",\n            \"address\": \"Неглинная ул., 4\",\n            \"stars\": 5,\n            \"price\": 10000\n        }\n    ]\n}"
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "[success] Получить информацию о статусе в программе лояльности",
+					"name": "Получить информацию о статусе в программе лояльности",
 					"event": [
 						{
 							"listen": "test",
@@ -260,22 +135,18 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{authorizationToken}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"description": "Имя пользователя",
+								"key": "X-User-Name",
+								"value": "{{username}}"
+							}
+						],
 						"url": {
-							"raw": "{{serviceUrl}}/api/v1/loyalty",
+							"raw": "{{baseUrl}}/api/v1/loyalty",
 							"host": [
-								"{{serviceUrl}}"
+								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
@@ -284,54 +155,46 @@
 							]
 						}
 					},
-					"response": []
-				},
-				{
-					"name": "[unauthorize] Забронировать отель",
-					"event": [
+					"response": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Забронировать отель\", () => {",
-									"    pm.response.to.have.status(401)",
-									"})"
+							"name": "Данные о бонусном счете",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Имя пользователя",
+										"key": "X-User-Name",
+										"value": "{{username}}"
+									}
 								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"hotelUid\": \"{{hotelUid}}\",\n    \"startDate\": \"2021-10-08\",\n    \"endDate\": \"2021-10-11\"\n}"
-						},
-						"url": {
-							"raw": "{{serviceUrl}}/api/v1/reservations",
-							"host": [
-								"{{serviceUrl}}"
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/loyalty",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"loyalty"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
 							],
-							"path": [
-								"api",
-								"v1",
-								"reservations"
-							]
+							"cookie": [],
+							"body": "{\n    \"status\": \"GOLD\",\n    \"discount\": 10,\n    \"reservationCount\": 25\n}"
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "[success] Забронировать отель",
+					"name": "Забронировать отель",
 					"event": [
 						{
 							"listen": "test",
@@ -372,18 +235,13 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{authorizationToken}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
+							{
+								"description": "Имя пользователя",
+								"key": "X-User-Name",
+								"value": "{{username}}"
+							},
 							{
 								"key": "Content-Type",
 								"value": "application/json"
@@ -394,9 +252,9 @@
 							"raw": "{\n    \"hotelUid\": \"{{hotelUid}}\",\n    \"startDate\": \"2021-10-08\",\n    \"endDate\": \"2021-10-11\"\n}"
 						},
 						"url": {
-							"raw": "{{serviceUrl}}/api/v1/reservations",
+							"raw": "{{baseUrl}}/api/v1/reservations",
 							"host": [
-								"{{serviceUrl}}"
+								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
@@ -405,53 +263,61 @@
 							]
 						}
 					},
-					"response": []
-				},
-				{
-					"name": "[unauthorize] Информация по конкретному бронированию",
-					"event": [
+					"response": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Получение информации о конкретном бронировании\", () => {",
-									"    pm.response.to.have.status(401)",
-									"})"
+							"name": "Информация о бронировании",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Имя пользователя",
+										"key": "X-User-Name",
+										"value": "{{username}}"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
 								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{serviceUrl}}/api/v1/reservations/:reservationUid",
-							"host": [
-								"{{serviceUrl}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"reservations",
-								":reservationUid"
-							],
-							"variable": [
-								{
-									"key": "reservationUid",
-									"value": "{{reservationUid}}",
-									"description": "UUID бронирования"
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"hotelUid\": \"{{hotelUid}}\",\n    \"startDate\": \"2021-10-08\",\n    \"endDate\": \"2021-10-11\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/reservations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"reservations"
+									]
 								}
-							]
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"reservationUid\": \"9b4ba1f7-e5ac-465b-ace4-7b54dec20f9a\",\n    \"hotelUid\": \"049161bb-badd-4fa8-9d90-87c9a82b0668\",\n    \"startDate\": \"2021-10-08\",\n    \"endDate\": \"2021-10-11\",\n    \"discount\": 10,\n    \"status\": \"PAID\",\n    \"payment\": {\n        \"status\": \"PAID\",\n        \"price\": 27000\n    }\n}"
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "[success] Информация по конкретному бронированию",
+					"name": "Информация по конкретному бронированию",
 					"event": [
 						{
 							"listen": "test",
@@ -493,22 +359,18 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{authorizationToken}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"description": "Имя пользователя",
+								"key": "X-User-Name",
+								"value": "{{username}}"
+							}
+						],
 						"url": {
-							"raw": "{{serviceUrl}}/api/v1/reservations/:reservationUid",
+							"raw": "{{baseUrl}}/api/v1/reservations/:reservationUid",
 							"host": [
-								"{{serviceUrl}}"
+								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
@@ -525,45 +387,53 @@
 							]
 						}
 					},
-					"response": []
-				},
-				{
-					"name": "[unauthorize] Информация по всем бронированиям пользователя",
-					"event": [
+					"response": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Получение информации по всем бронированиям\", () => {",
-									"    pm.response.to.have.status(401)",
-									"})"
+							"name": "Информация по конкретному бронированию",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Имя пользователя",
+										"key": "X-User-Name",
+										"value": "{{username}}"
+									}
 								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{serviceUrl}}/api/v1/reservations",
-							"host": [
-								"{{serviceUrl}}"
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/reservations/:reservationUid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"reservations",
+										":reservationUid"
+									],
+									"variable": [
+										{
+											"key": "reservationUid",
+											"value": "{{reservationUid}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
 							],
-							"path": [
-								"api",
-								"v1",
-								"reservations"
-							]
+							"cookie": [],
+							"body": "{\n    \"reservationUid\": \"9b4ba1f7-e5ac-465b-ace4-7b54dec20f9a\",\n    \"hotel\": {\n        \"hotelUid\": \"049161bb-badd-4fa8-9d90-87c9a82b0668\",\n        \"name\": \"Ararat Park Hyatt Moscow\",\n        \"fullAddress\": \"Россия, Москва, Неглинная ул., 4\",\n        \"stars\": 5\n    },\n    \"startDate\": \"2021-10-08\",\n    \"endDate\": \"2021-10-11\",\n    \"status\": \"PAID\",\n    \"payment\": {\n        \"status\": \"PAID\",\n        \"price\": 27000\n    }\n}"
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "[success] Информация по всем бронированиям пользователя",
+					"name": "Информация по всем бронированиям пользователя",
 					"event": [
 						{
 							"listen": "test",
@@ -607,22 +477,18 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{authorizationToken}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"description": "Имя пользователя",
+								"key": "X-User-Name",
+								"value": "{{username}}"
+							}
+						],
 						"url": {
-							"raw": "{{serviceUrl}}/api/v1/reservations",
+							"raw": "{{baseUrl}}/api/v1/reservations",
 							"host": [
-								"{{serviceUrl}}"
+								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
@@ -631,45 +497,46 @@
 							]
 						}
 					},
-					"response": []
-				},
-				{
-					"name": "[unauthorize] Информация о пользователе",
-					"event": [
+					"response": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Получение информации о пользователе\", () => {",
-									"    pm.response.to.have.status(401)",
-									"})"
+							"name": "Информация по всем билетам",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Имя пользователя",
+										"key": "X-User-Name",
+										"value": "{{username}}"
+									}
 								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{serviceUrl}}/api/v1/me",
-							"host": [
-								"{{serviceUrl}}"
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/reservations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"reservations"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
 							],
-							"path": [
-								"api",
-								"v1",
-								"me"
-							]
+							"cookie": [],
+							"body": "[\n    {\n        \"reservationUid\": \"9b4ba1f7-e5ac-465b-ace4-7b54dec20f9a\",\n        \"hotel\": {\n            \"hotelUid\": \"049161bb-badd-4fa8-9d90-87c9a82b0668\",\n            \"name\": \"Ararat Park Hyatt Moscow\",\n            \"fullAddress\": \"Россия, Москва, Неглинная ул., 4\",\n            \"stars\": 5\n        },\n        \"startDate\": \"2021-10-08\",\n        \"endDate\": \"2021-10-11\",\n        \"status\": \"PAID\",\n        \"payment\": {\n            \"status\": \"PAID\",\n            \"price\": 27000\n        }\n    }\n]"
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "[success] Информация о пользователе",
+					"name": "Информация о пользователе",
 					"event": [
 						{
 							"listen": "test",
@@ -718,22 +585,18 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{authorizationToken}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"description": "Имя пользователя",
+								"key": "X-User-Name",
+								"value": "{{username}}"
+							}
+						],
 						"url": {
-							"raw": "{{serviceUrl}}/api/v1/me",
+							"raw": "{{baseUrl}}/api/v1/me",
 							"host": [
-								"{{serviceUrl}}"
+								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
@@ -742,10 +605,46 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Полная информация о пользователе",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Имя пользователя",
+										"key": "X-User-Name",
+										"value": "{{username}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"reservations\": [\n        {\n            \"reservationUid\": \"9b4ba1f7-e5ac-465b-ace4-7b54dec20f9a\",\n            \"hotel\": {\n                \"hotelUid\": \"049161bb-badd-4fa8-9d90-87c9a82b0668\",\n                \"name\": \"Ararat Park Hyatt Moscow\",\n                \"fullAddress\": \"Россия, Москва, Неглинная ул., 4\",\n                \"stars\": 5\n            },\n            \"startDate\": \"2021-10-08\",\n            \"endDate\": \"2021-10-11\",\n            \"status\": \"PAID\",\n            \"payment\": {\n                \"status\": \"PAID\",\n                \"price\": 27000\n            }\n        }\n    ],\n    \"loyalty\": {\n        \"status\": \"GOLD\",\n        \"discount\": 10\n    }\n}"
+						}
+					]
 				},
 				{
-					"name": "[success] Получить информацию о статусе в программе лояльности после бронирования",
+					"name": "Получить информацию о статусе в программе лояльности после бронирования",
 					"event": [
 						{
 							"listen": "test",
@@ -768,22 +667,18 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{authorizationToken}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"description": "Имя пользователя",
+								"key": "X-User-Name",
+								"value": "{{username}}"
+							}
+						],
 						"url": {
-							"raw": "{{serviceUrl}}/api/v1/loyalty",
+							"raw": "{{baseUrl}}/api/v1/loyalty",
 							"host": [
-								"{{serviceUrl}}"
+								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
@@ -792,53 +687,46 @@
 							]
 						}
 					},
-					"response": []
-				},
-				{
-					"name": "[unauthorize] Отменить бронирование",
-					"event": [
+					"response": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Отменить бронирование\", () => {",
-									"    pm.response.to.have.status(401)",
-									"})"
+							"name": "Данные о бонусном счете",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Имя пользователя",
+										"key": "X-User-Name",
+										"value": "{{username}}"
+									}
 								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{serviceUrl}}/api/v1/reservations/:reservationUid",
-							"host": [
-								"{{serviceUrl}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"reservations",
-								":reservationUid"
-							],
-							"variable": [
-								{
-									"key": "reservationUid",
-									"value": "{{reservationUid}}",
-									"description": "UUID бронирования"
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/loyalty",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"loyalty"
+									]
 								}
-							]
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"GOLD\",\n    \"discount\": 10,\n    \"reservationCount\": 25\n}"
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "[success] Отменить бронирование",
+					"name": "Отменить бронирование",
 					"event": [
 						{
 							"listen": "test",
@@ -853,22 +741,18 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{authorizationToken}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"description": "Имя пользователя",
+								"key": "X-User-Name",
+								"value": "{{username}}"
+							}
+						],
 						"url": {
-							"raw": "{{serviceUrl}}/api/v1/reservations/:reservationUid",
+							"raw": "{{baseUrl}}/api/v1/reservations/:reservationUid",
 							"host": [
-								"{{serviceUrl}}"
+								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
@@ -885,19 +769,60 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Бронь успешно отменена",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "Имя пользователя",
+										"key": "X-User-Name",
+										"value": "{{username}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/reservations/:reservationUid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"reservations",
+										":reservationUid"
+									],
+									"variable": [
+										{
+											"key": "reservationUid",
+											"value": "{{reservationUid}}"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
 				}
 			],
-			"auth": {
-				"type": "noauth"
-			},
 			"event": [
 				{
 					"listen": "prerequest",
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"pm.collectionVariables.set(\"hotelUid\", \"049161bb-badd-4fa8-9d90-87c9a82b0668\")"
+							"pm.collectionVariables.set(\"hotelUid\", \"049161bb-badd-4fa8-9d90-87c9a82b0668\")",
+							"pm.collectionVariables.set(\"username\", \"Test Max\")"
 						]
 					}
 				},
@@ -915,11 +840,15 @@
 	],
 	"variable": [
 		{
-			"key": "serviceUrl",
-			"value": "http://localhost:8080"
+			"key": "baseUrl",
+			"value": ""
 		},
 		{
 			"key": "hotelUid",
+			"value": ""
+		},
+		{
+			"key": "username",
 			"value": ""
 		},
 		{
@@ -944,10 +873,6 @@
 		},
 		{
 			"key": "endDate",
-			"value": ""
-		},
-		{
-			"key": "authorizationToken",
 			"value": ""
 		}
 	]

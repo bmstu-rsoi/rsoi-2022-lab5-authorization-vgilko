@@ -10,8 +10,6 @@ paths:
       summary: Получить список библиотек в городе
       tags:
         - Gateway API
-      security:
-        - bearerAuth: [ ]
       parameters:
         - name: page
           in: query
@@ -39,20 +37,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/LibraryPaginationResponse"
-        "401":
-          description: Ошибка авторизации
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
 
   /api/v1/libraries/{libraryUid}/books:
     get:
       summary: Получить список книг в выбранной библиотеке
       tags:
         - Gateway API
-      security:
-        - bearerAuth: [ ]
       parameters:
         - name: page
           in: query
@@ -85,20 +75,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/LibraryBookPaginationResponse"
-        "401":
-          description: Ошибка авторизации
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
 
   /api/v1/reservations:
     get:
       summary: Получить информацию по всем взятым в прокат книгам пользователя
       tags:
         - Gateway API
-      security:
-        - bearerAuth: [ ]
+      parameters:
+        - name: X-User-Name
+          in: header
+          description: Имя пользователя
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Информация по всем взятым в прокат книгам
@@ -108,19 +97,18 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/BookReservationResponse"
-        "401":
-          description: Ошибка авторизации
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
 
     post:
       summary: Взять книгу в библиотеке
       tags:
         - Gateway API
-      security:
-        - bearerAuth: [ ]
+      parameters:
+        - name: X-User-Name
+          in: header
+          description: Имя пользователя
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -139,20 +127,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ValidationErrorResponse"
-        "401":
-          description: Ошибка авторизации
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
 
   /api/v1/reservations/{reservationUid}/return:
     post:
       summary: Вернуть книгу
       tags:
         - Gateway API
-      security:
-        - bearerAuth: [ ]
       parameters:
         - name: reservationUid
           in: path
@@ -161,6 +141,12 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: X-User-Name
+          in: header
+          description: Имя пользователя
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -169,12 +155,6 @@ paths:
       responses:
         "204":
           description: Книга успешно возвращена
-        "401":
-          description: Ошибка авторизации
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: Бронирование не найдено
           content:
@@ -187,8 +167,13 @@ paths:
       summary: Получить рейтинг пользователя
       tags:
         - Gateway API
-      security:
-        - bearerAuth: [ ]
+      parameters:
+        - name: X-User-Name
+          in: header
+          description: Имя пользователя
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Рейтинг пользователя
@@ -196,20 +181,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserRatingResponse"
-        "401":
-          description: Ошибка авторизации
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
 
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-
   schemas:
     LibraryPaginationResponse:
       type: object

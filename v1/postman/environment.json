@@ -1,34 +1,9 @@
 {
 	"id": "acc90f86-88ad-444e-924e-6f48f6ee7711",
-	"name": "[rsoi][lab5] Flight Service",
+	"name": "[rsoi][lab4] Flight Service",
 	"values": [
 		{
-			"key": "serviceUrl",
-			"value": "",
-			"enabled": true
-		},
-		{
-			"key": "identityProviderUrl",
-			"value": "",
-			"enabled": true
-		},
-		{
-			"key": "username",
-			"value": "",
-			"enabled": true
-		},
-		{
-			"key": "password",
-			"value": "",
-			"enabled": true
-		},
-		{
-			"key": "clientId",
-			"value": "",
-			"enabled": true
-		},
-		{
-			"key": "clientSecret",
+			"key": "baseUrl",
 			"value": "",
 			"enabled": true
 		}
