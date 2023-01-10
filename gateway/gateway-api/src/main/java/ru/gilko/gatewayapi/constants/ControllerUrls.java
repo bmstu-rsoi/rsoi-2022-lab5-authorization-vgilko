@@ -4,7 +4,8 @@ public class ControllerUrls {
     private ControllerUrls() {
     }
 
-
+    public static final String AUTH = "/authorize";
+    public static final String CALLBACK = "/callback";
 
     public static final String CARS_URL = "/cars";
     public static final String RENTAL_URL = "/rental";
